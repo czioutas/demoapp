@@ -1,0 +1,30 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DotNetCoreInstaller@2
+  displayName: Install .Net 5
+  inputs:
+    version: 5.x
+
+- script: dotnet tool restore --configfile StandardNuGet.config
+  displayName: Dotnet Tool Restore
+
+- script: dotnet dotnet-format DateTonight.API.sln --check
+  displayName: Dotnet Format
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: 'cc78eb7e-e0e4-4bf2-b16f-cb0eae10646d/453c1bed-e5e8-460d-a5ca-99e7fa7caac8'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
