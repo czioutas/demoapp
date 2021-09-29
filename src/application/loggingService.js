@@ -1,9 +1,9 @@
 const _ = require('lodash');
 const winston = require('winston');
-const config = require('../config/index');
+// const config = require('./config/index');
 
-const NODE_ENV = config.env('NODE_ENV', 'development');
-const LOGGING_LEVEL = config.env('LOGGING_LEVEL', config.get('logging.level', NODE_ENV === 'production' ? 'debug' : 'info'));
+const NODE_ENV = 'development'; //config.env('NODE_ENV', 'development');
+const LOGGING_LEVEL = 'debug'; //config.env('LOGGING_LEVEL', config.get('logging.level', NODE_ENV === 'production' ? 'debug' : 'info'));
 
 const format = winston.format;
 
